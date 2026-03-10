@@ -18,604 +18,128 @@
     --card2: #111828;
     --text: #c8c4b8;
     --text-dim: #7a7060;
-    --red-dark: #3a1010;
-    --azerite: #1a4a6a;
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--deep);
-    color: var(--text);
-    font-family: 'Crimson Pro', Georgia, serif;
-    font-size: 18px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* NOISE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--deep); color:var(--text); font-family:'Crimson Pro',Georgia,serif; font-size:18px; line-height:1.7; overflow-x:hidden; }
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:0.4; }
 
   /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 4rem 2rem;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 30%, rgba(58,111,168,0.12) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 40% at 50% 80%, rgba(201,168,76,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 100% 100% at 50% 50%, rgba(6,8,16,0) 0%, var(--deep) 100%);
-  }
-
-  .hero-lines {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
-  }
-
-  .rune-circle {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    border: 1px solid rgba(201,168,76,0.08);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: rotate 120s linear infinite;
-  }
-
-  .rune-circle::before {
-    content: '';
-    position: absolute;
-    inset: 20px;
-    border-radius: 50%;
-    border: 1px solid rgba(142,184,229,0.06);
-    animation: rotate 80s linear infinite reverse;
-  }
-
-  .rune-circle::after {
-    content: '';
-    position: absolute;
-    inset: 60px;
-    border-radius: 50%;
-    border: 1px solid rgba(201,168,76,0.04);
-  }
-
-  @keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-  .hero-eyebrow {
-    font-family: 'Cinzel', serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.4em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-    position: relative;
-    animation: fadeUp 1.2s ease forwards;
-    opacity: 0;
-  }
-
-  .hero-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(2.5rem, 8vw, 6rem);
-    font-weight: 900;
-    line-height: 1;
-    color: var(--gold);
-    text-shadow:
-      0 0 80px rgba(201,168,76,0.3),
-      0 0 160px rgba(201,168,76,0.1);
-    position: relative;
-    animation: fadeUp 1.2s 0.2s ease forwards;
-    opacity: 0;
-    letter-spacing: 0.05em;
-  }
-
-  .hero-subtitle {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    color: var(--blue-light);
-    letter-spacing: 0.25em;
-    margin-top: 1rem;
-    animation: fadeUp 1.2s 0.4s ease forwards;
-    opacity: 0;
-  }
-
-  .hero-divider {
-    width: 200px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 2.5rem auto;
-    animation: fadeUp 1.2s 0.6s ease forwards;
-    opacity: 0;
-  }
-
-  .hero-quote {
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--text-dim);
-    max-width: 500px;
-    animation: fadeUp 1.2s 0.8s ease forwards;
-    opacity: 0;
-    line-height: 1.6;
-  }
-
-  .hero-quote span {
-    color: var(--gold-dim);
-    font-style: normal;
-    font-size: 0.85rem;
-    display: block;
-    margin-top: 0.5rem;
-    letter-spacing: 0.1em;
-  }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    animation: fadeUp 1.2s 1.2s ease forwards, pulse 2s 2.4s ease infinite;
-    opacity: 0;
-  }
-
-  .scroll-hint span {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    color: var(--text-dim);
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(var(--gold-dim), transparent);
-  }
-
-  @keyframes pulse { 0%, 100% { opacity: 0.6 } 50% { opacity: 1 } }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; padding:4rem 2rem; text-align:center; overflow:hidden; }
+  .hero-bg { position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(58,111,168,0.12) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 50% 80%, rgba(201,168,76,0.06) 0%, transparent 60%); }
+  .hero-lines { position:absolute; inset:0; background-image: linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 30%,transparent 100%); }
+  .rune-circle { position:absolute; width:600px; height:600px; border-radius:50%; border:1px solid rgba(201,168,76,0.08); top:50%; left:50%; transform:translate(-50%,-50%); animation:rotate 120s linear infinite; }
+  .rune-circle::before { content:''; position:absolute; inset:20px; border-radius:50%; border:1px solid rgba(142,184,229,0.06); animation:rotate 80s linear infinite reverse; }
+  @keyframes rotate { to { transform:translate(-50%,-50%) rotate(360deg); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes pulse { 0%,100% { opacity:0.6 } 50% { opacity:1 } }
+  .hero-eyebrow { font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.4em; color:var(--gold-dim); text-transform:uppercase; margin-bottom:2rem; position:relative; animation:fadeUp 1.2s ease forwards; opacity:0; }
+  .hero-title { font-family:'Cinzel Decorative',serif; font-size:clamp(2rem,8vw,5.5rem); font-weight:900; line-height:1; color:var(--gold); text-shadow:0 0 80px rgba(201,168,76,0.3),0 0 160px rgba(201,168,76,0.1); position:relative; animation:fadeUp 1.2s 0.2s ease forwards; opacity:0; letter-spacing:0.05em; }
+  .hero-subtitle { font-family:'Cinzel Decorative',serif; font-size:clamp(1.5rem,5vw,3rem); color:var(--blue-light); letter-spacing:0.15em; margin-top:0.75rem; animation:fadeUp 1.2s 0.4s ease forwards; opacity:0; }
+  .hero-divider { width:200px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:2.5rem auto; animation:fadeUp 1.2s 0.6s ease forwards; opacity:0; }
+  .hero-quote { font-style:italic; font-size:1.1rem; color:var(--text-dim); max-width:500px; animation:fadeUp 1.2s 0.8s ease forwards; opacity:0; line-height:1.6; }
+  .hero-quote span { color:var(--gold-dim); font-style:normal; font-size:0.85rem; display:block; margin-top:0.5rem; letter-spacing:0.1em; }
+  .scroll-hint { position:absolute; bottom:3rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.5rem; animation:fadeUp 1.2s 1.2s ease forwards, pulse 2s 2.4s ease infinite; opacity:0; }
+  .scroll-hint span { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.3em; color:var(--text-dim); }
+  .scroll-line { width:1px; height:40px; background:linear-gradient(var(--gold-dim),transparent); }
 
   /* SECTIONS */
-  section {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 5rem 2rem;
-  }
+  section { max-width:960px; margin:0 auto; padding:5rem 2rem; }
+  .section-label { font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.5em; color:var(--gold-dim); text-transform:uppercase; margin-bottom:0.75rem; display:block; }
+  .section-title { font-family:'Cinzel Decorative',serif; font-size:clamp(1.4rem,4vw,2.2rem); color:var(--gold); margin-bottom:2rem; line-height:1.2; }
+  .section-divider { width:100%; height:1px; background:linear-gradient(90deg,var(--gold-dim),transparent); margin-bottom:3rem; opacity:0.4; }
 
-  .section-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.5em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-    display: block;
-  }
+  /* CONCEPT */
+  .concept-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:2rem; }
+  .concept-card { background:var(--card); border:1px solid rgba(201,168,76,0.1); border-left:3px solid var(--gold-dim); padding:1.5rem; transition:border-color 0.3s; }
+  .concept-card:hover { border-left-color:var(--gold); }
+  .concept-card h3 { font-family:'Cinzel',serif; font-size:0.8rem; letter-spacing:0.25em; color:var(--gold); margin-bottom:0.75rem; text-transform:uppercase; }
+  .concept-card p { font-size:0.95rem; color:var(--text-dim); line-height:1.7; }
+  .motif-box { background:var(--card); border:1px solid rgba(201,168,76,0.15); padding:2.5rem 3rem; text-align:center; position:relative; margin-top:2rem; }
+  .motif-box::before,.motif-box::after { content:'◆'; position:absolute; color:var(--gold-dim); font-size:0.6rem; }
+  .motif-box::before { top:1rem; left:1rem; }
+  .motif-box::after { bottom:1rem; right:1rem; }
+  .motif-text { font-family:'Cinzel',serif; font-size:clamp(0.95rem,2.5vw,1.2rem); color:var(--gold); font-weight:600; letter-spacing:0.06em; line-height:1.6; }
 
-  .section-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(1.4rem, 4vw, 2.2rem);
-    color: var(--gold);
-    margin-bottom: 2rem;
-    line-height: 1.2;
-  }
-
-  .section-divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, var(--gold-dim), transparent);
-    margin-bottom: 3rem;
-    opacity: 0.4;
-  }
-
-  /* KONCEPCJA */
-  .concept-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .concept-card {
-    background: var(--card);
-    border: 1px solid rgba(201,168,76,0.1);
-    border-left: 3px solid var(--gold-dim);
-    padding: 1.5rem;
-    position: relative;
-    transition: border-color 0.3s;
-  }
-
-  .concept-card:hover { border-left-color: var(--gold); }
-
-  .concept-card h3 {
-    font-family: 'Cinzel', serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.25em;
-    color: var(--gold);
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-  }
-
-  .concept-card p {
-    font-size: 0.95rem;
-    color: var(--text-dim);
-    line-height: 1.7;
-  }
-
-  /* POSTACIE */
-  .cast-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .cast-card {
-    background: var(--card);
-    border: 1px solid rgba(255,255,255,0.04);
-    padding: 1.25rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s;
-    cursor: default;
-  }
-
-  .cast-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(201,168,76,0.2);
-  }
-
-  .cast-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px;
-    height: 100%;
-  }
-
-  .cast-card.protagonist::before { background: var(--gold); }
-  .cast-card.narrator::before { background: var(--blue); }
-  .cast-card.villain::before { background: #8b2020; }
-  .cast-card.ally::before { background: #2a6b3a; }
-  .cast-card.chaos::before { background: #4a1a6a; }
-
-  .cast-name {
-    font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-  }
-
-  .cast-card.protagonist .cast-name { color: var(--gold); }
-  .cast-card.narrator .cast-name { color: var(--blue-light); }
-  .cast-card.villain .cast-name { color: #e05050; }
-  .cast-card.ally .cast-name { color: #6abf7a; }
-  .cast-card.chaos .cast-name { color: #c080e0; }
-
-  .cast-voice {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    margin-bottom: 0.5rem;
-    font-style: italic;
-  }
-
-  .cast-sound {
-    font-size: 0.78rem;
-    color: var(--gold-dim);
-    font-family: 'Cinzel', serif;
-    letter-spacing: 0.05em;
-  }
+  /* CAST */
+  .cast-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-top:2rem; }
+  .cast-card { background:var(--card); border:1px solid rgba(255,255,255,0.04); padding:1.25rem 1.5rem; position:relative; overflow:hidden; transition:transform 0.3s,border-color 0.3s; }
+  .cast-card:hover { transform:translateY(-2px); border-color:rgba(201,168,76,0.2); }
+  .cast-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; }
+  .cast-card.protagonist::before { background:var(--gold); }
+  .cast-card.narrator::before { background:var(--blue); }
+  .cast-card.villain::before { background:#8b2020; }
+  .cast-card.ally::before { background:#2a6b3a; }
+  .cast-card.chaos::before { background:#4a1a6a; }
+  .cast-name { font-family:'Cinzel',serif; font-size:1rem; font-weight:600; margin-bottom:0.25rem; }
+  .cast-card.protagonist .cast-name { color:var(--gold); }
+  .cast-card.narrator .cast-name { color:var(--blue-light); }
+  .cast-card.villain .cast-name { color:#e05050; }
+  .cast-card.ally .cast-name { color:#6abf7a; }
+  .cast-card.chaos .cast-name { color:#c080e0; }
+  .cast-voice { font-size:0.8rem; color:var(--text-dim); margin-bottom:0.5rem; font-style:italic; }
+  .cast-sound { font-size:0.78rem; color:var(--gold-dim); font-family:'Cinzel',serif; letter-spacing:0.05em; }
 
   /* TRACKLIST */
-  .acts { display: flex; flex-direction: column; gap: 3rem; margin-top: 2rem; }
+  .acts { display:flex; flex-direction:column; gap:3rem; margin-top:2rem; }
+  .act-header { display:flex; align-items:center; gap:1.5rem; margin-bottom:1.25rem; }
+  .act-num { font-family:'Cinzel Decorative',serif; font-size:2.5rem; font-weight:900; color:rgba(201,168,76,0.15); line-height:1; min-width:3rem; }
+  .act-title { font-family:'Cinzel',serif; font-size:1.1rem; color:var(--gold); letter-spacing:0.15em; text-transform:uppercase; }
+  .act-subtitle { font-size:0.85rem; color:var(--text-dim); margin-top:0.2rem; }
+  .act-line { flex:1; height:1px; background:linear-gradient(90deg,rgba(201,168,76,0.2),transparent); }
+  .tracklist { display:flex; flex-direction:column; gap:2px; }
 
-  .act-header {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 1.25rem;
-  }
+  /* TRACK */
+  .track { background:var(--card); border:1px solid transparent; transition:all 0.25s; position:relative; overflow:hidden; }
+  .track-header { display:grid; grid-template-columns:2.5rem 1fr auto; align-items:center; gap:1rem; padding:0.9rem 1.25rem; cursor:pointer; }
+  .track-header:hover { background:var(--card2); }
+  .track.done { border-left:2px solid var(--gold-dim); }
+  .track.next { border-left:2px solid var(--blue); }
+  .track-num { font-family:'Cinzel',serif; font-size:0.75rem; color:var(--text-dim); text-align:right; }
+  .track-info { min-width:0; }
+  .track-title { font-family:'Cinzel',serif; font-size:0.95rem; color:var(--text); margin-bottom:0.15rem; display:flex; align-items:center; gap:0.4rem; }
+  .track.done .track-title { color:var(--gold); }
+  .track-voice { font-size:0.78rem; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .track-right { display:flex; align-items:center; gap:0.75rem; }
+  .track-status { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.1em; padding:0.2rem 0.6rem; border-radius:2px; white-space:nowrap; }
+  .status-done { background:rgba(201,168,76,0.1); color:var(--gold); border:1px solid rgba(201,168,76,0.3); }
+  .status-next { background:rgba(58,111,168,0.1); color:var(--blue-light); border:1px solid rgba(58,111,168,0.3); }
+  .status-planned { background:rgba(255,255,255,0.03); color:var(--text-dim); border:1px solid rgba(255,255,255,0.06); }
+  .track-arrow { font-size:0.55rem; color:var(--gold-dim); transition:transform 0.3s; flex-shrink:0; }
+  .track.open .track-arrow { transform:rotate(180deg); }
 
-  .act-num {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: rgba(201,168,76,0.15);
-    line-height: 1;
-    min-width: 3rem;
-  }
-
-  .act-title {
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    color: var(--gold);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  .act-subtitle {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    margin-top: 0.2rem;
-  }
-
-  .act-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(201,168,76,0.2), transparent);
-  }
-
-  .tracklist { display: flex; flex-direction: column; gap: 2px; }
-
-  .track {
-    display: grid;
-    grid-template-columns: 2.5rem 1fr auto;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.9rem 1.25rem;
-    background: var(--card);
-    border: 1px solid transparent;
-    transition: all 0.25s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .track::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(201,168,76,0.03), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .track:hover {
-    border-color: rgba(201,168,76,0.12);
-    background: var(--card2);
-  }
-
-  .track:hover::after { opacity: 1; }
-
-  .track.done { border-left: 2px solid var(--gold-dim); }
-  .track.next { border-left: 2px solid var(--blue); }
-
-  .track-num {
-    font-family: 'Cinzel', serif;
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    text-align: right;
-  }
-
-  .track-info { min-width: 0; }
-
-  .track-title {
-    font-family: 'Cinzel', serif;
-    font-size: 0.95rem;
-    color: var(--text);
-    margin-bottom: 0.15rem;
-  }
-
-  .track.done .track-title { color: var(--gold); }
-
-  .track-voice {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .track-status {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    padding: 0.2rem 0.6rem;
-    border-radius: 2px;
-    white-space: nowrap;
-  }
-
-  .status-done {
-    background: rgba(201,168,76,0.1);
-    color: var(--gold);
-    border: 1px solid rgba(201,168,76,0.3);
-  }
-
-  .status-next {
-    background: rgba(58,111,168,0.1);
-    color: var(--blue-light);
-    border: 1px solid rgba(58,111,168,0.3);
-  }
-
-  .status-planned {
-    background: rgba(255,255,255,0.03);
-    color: var(--text-dim);
-    border: 1px solid rgba(255,255,255,0.06);
-  }
-
-  /* TEKST */
-  .lyrics-container {
-    background: var(--card);
-    border: 1px solid rgba(201,168,76,0.1);
-    padding: 3rem;
-    position: relative;
-  }
-
-  .lyrics-container::before {
-    content: '01';
-    position: absolute;
-    top: 2rem;
-    right: 2.5rem;
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 4rem;
-    color: rgba(201,168,76,0.05);
-    font-weight: 900;
-    line-height: 1;
-  }
-
-  .lyrics-section {
-    margin-bottom: 2rem;
-  }
-
-  .lyrics-tag {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.4em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
-    display: block;
-  }
-
-  .lyrics-lines {
-    font-size: 1rem;
-    line-height: 2;
-    color: var(--text);
-  }
-
-  .lyrics-lines.refrain {
-    color: var(--gold);
-    font-size: 1.05rem;
-  }
-
-  /* MOTYW */
-  .motif-box {
-    background: var(--card);
-    border: 1px solid rgba(201,168,76,0.15);
-    padding: 2.5rem 3rem;
-    text-align: center;
-    position: relative;
-    margin-top: 2rem;
-  }
-
-  .motif-box::before, .motif-box::after {
-    content: '◆';
-    position: absolute;
-    color: var(--gold-dim);
-    font-size: 0.6rem;
-  }
-
-  .motif-box::before { top: 1rem; left: 1rem; }
-  .motif-box::after { bottom: 1rem; right: 1rem; }
-
-  .motif-text {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    color: var(--gold);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    line-height: 1.6;
-  }
+  /* PANEL */
+  .track-panel { display:none; padding:1.5rem 1.5rem 1.5rem 4rem; border-top:1px solid rgba(201,168,76,0.07); background:rgba(0,0,0,0.2); }
+  .track.open .track-panel { display:block; }
+  .panel-soon { font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.3em; color:var(--text-dim); text-transform:uppercase; padding:1rem 0; }
+  .panel-section { margin-bottom:1.25rem; }
+  .panel-tag { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.35em; color:var(--gold-dim); text-transform:uppercase; margin-bottom:0.4rem; display:block; }
+  .panel-lines { font-size:0.95rem; line-height:2; color:var(--text); }
+  .panel-lines.refrain { color:var(--gold); }
+  .suno-link { display:inline-flex; align-items:center; gap:0.5rem; margin-top:1.25rem; padding:0.5rem 1.25rem; border:1px solid rgba(201,168,76,0.35); color:var(--gold); font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em; text-decoration:none; text-transform:uppercase; transition:all 0.3s; background:rgba(201,168,76,0.05); }
+  .suno-link:hover { background:rgba(201,168,76,0.12); border-color:var(--gold); }
 
   /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 4rem 2rem;
-    border-top: 1px solid rgba(255,255,255,0.04);
-  }
+  footer { text-align:center; padding:4rem 2rem; border-top:1px solid rgba(255,255,255,0.04); }
+  .footer-title { font-family:'Cinzel Decorative',serif; font-size:1.2rem; color:var(--gold-dim); margin-bottom:0.75rem; }
+  .footer-sub { font-size:0.85rem; color:var(--text-dim); line-height:1.8; }
+  .footer-sub a { color:var(--gold-dim); text-decoration:none; }
+  .footer-sub a:hover { color:var(--gold); }
 
-  .footer-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.2rem;
-    color: var(--gold-dim);
-    margin-bottom: 0.75rem;
-  }
-
-  .footer-sub {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    line-height: 1.8;
-  }
-
-  .footer-sub a {
-    color: var(--gold-dim);
-    text-decoration: none;
-  }
-
-  .footer-sub a:hover { color: var(--gold); }
-
-  /* SUNO PLACEHOLDER */
-  .player-placeholder {
-    background: var(--card);
-    border: 1px dashed rgba(201,168,76,0.2);
-    padding: 2rem;
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  .player-placeholder p {
-    color: var(--text-dim);
-    font-size: 0.9rem;
-    font-style: italic;
-  }
-
-  .player-placeholder .track-link {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.6rem 1.5rem;
-    border: 1px solid rgba(201,168,76,0.3);
-    color: var(--gold);
-    font-family: 'Cinzel', serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: all 0.3s;
-  }
-
-  .player-placeholder .track-link:hover {
-    background: rgba(201,168,76,0.1);
-    border-color: var(--gold);
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 640px) {
-    .concept-grid { grid-template-columns: 1fr; }
-    .lyrics-container { padding: 1.5rem; }
-    .track { grid-template-columns: 2rem 1fr; }
-    .track-status { display: none; }
+  @media (max-width:640px) {
+    .concept-grid { grid-template-columns:1fr; }
+    .track-panel { padding:1.25rem 1rem 1.25rem 1rem; }
+    .track-status { display:none; }
   }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-bg"></div>
   <div class="hero-lines"></div>
   <div class="rune-circle"></div>
-
-  <p class="hero-eyebrow">Fan Project • Album Koncepcyjny • Suno AI</p>
+  <p class="hero-eyebrow">Fan Project · Album Koncepcyjny · Suno AI</p>
   <h1 class="hero-title">AZEROTH MÓWI</h1>
   <p class="hero-subtitle">THRALL</p>
   <div class="hero-divider"></div>
@@ -623,21 +147,17 @@
     „Go'el, bracie zimowych wilczych kłów"
     <span>— Azeroth, utwór 01</span>
   </blockquote>
-
   <div class="scroll-hint">
     <span>Przewiń</span>
     <div class="scroll-line"></div>
   </div>
 </div>
 
-<!-- KONCEPCJA -->
 <section id="koncepcja">
   <span class="section-label">O Projekcie</span>
   <h2 class="section-title">Koncepcja</h2>
   <div class="section-divider"></div>
-
-  <p>Album koncepcyjny opowiadający życiorys Thralla / Go'ela z World of Warcraft — widziany oczami samej Azerotha. Historia opowiedziana wyłącznie przez muzykę i tekst. Każdy utwór działa autonomicznie, a jednocześnie niesie narrację do przodu.</p>
-
+  <p>Album koncepcyjny opowiadający życiorys Thralla / Go'ela z World of Warcraft — widziany oczami samej Azeroth. Historia opowiedziana wyłącznie przez muzykę i tekst. Każdy utwór działa autonomicznie, a jednocześnie niesie narrację do przodu.</p>
   <div class="concept-grid">
     <div class="concept-card">
       <h3>Narratorka</h3>
@@ -656,457 +176,152 @@
       <p>Otwarte. Garrosh przejmuje berło. Gracz WoW czuje żołądek — wie co nastąpi. Laik słyszy wolność i niepewność jednocześnie. Obaj mają rację.</p>
     </div>
   </div>
-
   <div class="motif-box">
     <p class="motif-text">Fan project dedykowany Samaelowi — Samael Channel News<br>
-    <span style="font-size:0.85rem; color: var(--text-dim); font-family: 'Crimson Pro', serif; font-style: italic; font-weight: 300;">Niekomercyjny tribute. Wszelkie prawa do świata Warcraft należą do Blizzard Entertainment.</span></p>
+    <span style="font-size:0.85rem;color:var(--text-dim);font-family:'Crimson Pro',serif;font-style:italic;font-weight:300;">Niekomercyjny tribute. Wszelkie prawa do świata Warcraft należą do Blizzard Entertainment.</span></p>
   </div>
 </section>
 
-<!-- POSTACIE -->
 <section id="postacie">
   <span class="section-label">Dramatis Personae</span>
   <h2 class="section-title">Postacie</h2>
   <div class="section-divider"></div>
-
   <div class="cast-grid">
-    <div class="cast-card protagonist">
-      <div class="cast-name">Thrall / Go'el</div>
-      <div class="cast-voice">Rap — baryton</div>
-      <div class="cast-sound">Bisz · Eldo · era Grammatik</div>
-    </div>
-    <div class="cast-card narrator">
-      <div class="cast-name">Azeroth</div>
-      <div class="cast-voice">Żeński wokal rockowy, contralto, mocny</div>
-      <div class="cast-sound">Nu-metal · orkiestralny · klimat Anja Orthodox</div>
-    </div>
-    <div class="cast-card villain">
-      <div class="cast-name">Blackmoore</div>
-      <div class="cast-voice">Tenor zimny</div>
-      <div class="cast-sound">Industrial · electronic · klimat Rammstein</div>
-    </div>
-    <div class="cast-card villain">
-      <div class="cast-name">Garrosh Hellscream</div>
-      <div class="cast-voice">Hardcore metal</div>
-      <div class="cast-sound">Sweet Noise · klimat Głaca</div>
-    </div>
-    <div class="cast-card chaos">
-      <div class="cast-name">Deathwing / Neltharion</div>
-      <div class="cast-voice">Głos / szept / chaos</div>
-      <div class="cast-sound">Tool · A Perfect Circle</div>
-    </div>
-    <div class="cast-card ally">
-      <div class="cast-name">Jaina Proudmoore</div>
-      <div class="cast-voice">Żeński wokal</div>
-      <div class="cast-sound">Obecny Linkin Park · klimat Emily</div>
-    </div>
-    <div class="cast-card villain">
-      <div class="cast-name">Genn Greymane</div>
-      <div class="cast-voice">Wokal metalowy</div>
-      <div class="cast-sound">Złota era Metallica</div>
-    </div>
-    <div class="cast-card ally">
-      <div class="cast-name">Anduin Wrynn</div>
-      <div class="cast-voice">Ambient, warstwa</div>
-      <div class="cast-sound">Massive Attack · Faithless · Moby</div>
-    </div>
-    <div class="cast-card ally">
-      <div class="cast-name">Drek'Thar</div>
-      <div class="cast-voice">Bas-baryton</div>
-      <div class="cast-sound">Folk orcki</div>
-    </div>
-    <div class="cast-card ally">
-      <div class="cast-name">Draka & Durotan</div>
-      <div class="cast-voice">Mezzosopran + Bas</div>
-      <div class="cast-sound">Folk-metalowy · prolog</div>
-    </div>
+    <div class="cast-card protagonist"><div class="cast-name">Thrall / Go'el</div><div class="cast-voice">Rap — baryton</div><div class="cast-sound">Bisz · Eldo · era Grammatik</div></div>
+    <div class="cast-card narrator"><div class="cast-name">Azeroth</div><div class="cast-voice">Żeński wokal rockowy, contralto, mocny</div><div class="cast-sound">Nu-metal · orkiestralny · klimat Anja Orthodox</div></div>
+    <div class="cast-card villain"><div class="cast-name">Blackmoore</div><div class="cast-voice">Tenor zimny</div><div class="cast-sound">Industrial · electronic · klimat Rammstein</div></div>
+    <div class="cast-card villain"><div class="cast-name">Garrosh Hellscream</div><div class="cast-voice">Hardcore metal</div><div class="cast-sound">Sweet Noise · klimat Głaca</div></div>
+    <div class="cast-card chaos"><div class="cast-name">Deathwing / Neltharion</div><div class="cast-voice">Głos / szept / chaos</div><div class="cast-sound">Tool · A Perfect Circle</div></div>
+    <div class="cast-card ally"><div class="cast-name">Jaina Proudmoore</div><div class="cast-voice">Żeński wokal</div><div class="cast-sound">Obecny Linkin Park · klimat Emily</div></div>
+    <div class="cast-card villain"><div class="cast-name">Genn Greymane</div><div class="cast-voice">Wokal metalowy</div><div class="cast-sound">Złota era Metallica</div></div>
+    <div class="cast-card ally"><div class="cast-name">Anduin Wrynn</div><div class="cast-voice">Ambient, warstwa</div><div class="cast-sound">Massive Attack · Faithless · Moby</div></div>
+    <div class="cast-card ally"><div class="cast-name">Drek'Thar</div><div class="cast-voice">Bas-baryton</div><div class="cast-sound">Folk orcki</div></div>
+    <div class="cast-card ally"><div class="cast-name">Draka &amp; Durotan</div><div class="cast-voice">Mezzosopran + Bas</div><div class="cast-sound">Folk-metalowy · prolog</div></div>
   </div>
 </section>
 
-<!-- TRACKLIST -->
 <section id="tracklist">
   <span class="section-label">23 Utwory</span>
   <h2 class="section-title">Tracklist</h2>
   <div class="section-divider"></div>
-
   <div class="acts">
 
     <!-- PROLOG -->
     <div class="act">
-      <div class="act-header">
-        <div class="act-num">I</div>
-        <div>
-          <div class="act-title">Prolog</div>
-          <div class="act-subtitle">Przed narodzinami</div>
-        </div>
-        <div class="act-line"></div>
-      </div>
+      <div class="act-header"><div class="act-num">I</div><div><div class="act-title">Prolog</div><div class="act-subtitle">Przed narodzinami</div></div><div class="act-line"></div></div>
       <div class="tracklist">
-        <div class="track done">
-          <div class="track-num">01</div>
-          <div class="track-info">
-            <div class="track-title">Przed Imieniem</div>
-            <div class="track-voice">Azeroth solo · gothic rock · contralto</div>
+
+        <!-- 01 GOTOWY -->
+        <div class="track done open" id="t01">
+          <div class="track-header" onclick="toggle('t01')">
+            <div class="track-num">01</div>
+            <div class="track-info">
+              <div class="track-title">Przed Imieniem <span class="track-arrow">▼</span></div>
+              <div class="track-voice">Azeroth solo · gothic rock · contralto</div>
+            </div>
+            <div class="track-right">
+              <div class="track-status status-done">Gotowy</div>
+            </div>
           </div>
-          <div class="track-status status-done">Gotowy</div>
-        </div>
-        <div class="track next">
-          <div class="track-num">02</div>
-          <div class="track-info">
-            <div class="track-title">Frostwolf</div>
-            <div class="track-voice">Draka + Durotan · folk metal · utwór się urywa</div>
+          <div class="track-panel">
+            <div class="panel-section"><span class="panel-tag">Intro</span><div class="panel-lines">Śpię w skale, w ogniu, w każdym wietrze<br>w głębinach, w niebie, w każdej sferze<br>tytanka śpiąca — w sobie niosę świat<br>mój oddech to wulkany, magma, żar</div></div>
+            <div class="panel-section"><span class="panel-tag">Zwrotka I</span><div class="panel-lines">Śnię snem starszym niż sam wszechświat<br>czuję każdy oddech, każdy ślad<br>żywioły niosą moje słowa w dal<br>woda i ogień — i wieczny ich żal<br><br>Szmaragdowy Sen jest cieniem mej duszy<br>Azeryt moja krew w ziemi się kruszy<br>Stare Bóstwa wgryzły się w mą skałę<br>czuję jednak coś — połączenie stałe</div></div>
+            <div class="panel-section"><span class="panel-tag">Pre-Chorus</span><div class="panel-lines">Gdzieś na śniegu krew pada w mą ziemię<br>czuję narodziny i nowe brzemię<br>coś się urywa — coś nowego wschodzi<br>Go'el idzie — od żywiołów pochodzi</div></div>
+            <div class="panel-section"><span class="panel-tag">Refren</span><div class="panel-lines refrain">Go'el — nim dostałeś imię, wiedziałam<br>Go'el — w śnie na Ciebie czekałam<br>Go'el — i Mroźnych Wilków Sfora<br>Go'el — śpij jeszcze — nadchodzi ta pora</div></div>
+            <div class="panel-section"><span class="panel-tag">Zwrotka II</span><div class="panel-lines">Neltharion był mym dzieckiem i strażnikiem<br>stał się moim bólem — podszeptów wynikiem<br>Yogg-Saron śpi w głębinach mej skały<br>Y'Shaarj — wyrwane serce — wciąż się żali<br><br>Szamani mówią do mnie przez kamienie<br>ogień, wiatr, woda to me westchnienie<br>jeden będzie głośniejszy od wszystkich<br>jedyny Go'el — najważniejszy z bliskich</div></div>
+            <div class="panel-section"><span class="panel-tag">Pre-Chorus II</span><div class="panel-lines">Gdzieś na śniegu krew Durotana broczy<br>przyjmuję ją — to wołanie mej nocy<br>pamiętam każdą kroplę tej miłości<br>Go'el — Durotan — Draka — pełen samotności</div></div>
+            <div class="panel-section"><span class="panel-tag">Bridge</span><div class="panel-lines">Nie jestem bogiem — jestem starą skałą<br>nie jestem wolna — lecz mam duszę stałą<br>widzę przyszłość przez zasłonę swoich snów<br>Go'el, bracie zimowych wilczych kłów</div></div>
+            <div class="panel-section"><span class="panel-tag">Outro</span><div class="panel-lines">Zapamiętaj ziemię pod swymi stopami<br>ona cię zna — rozmawia z twoimi snami<br>zanim ty ją poznasz — ona zna cię już<br>Go'el — twoje imię — w moich żyłach wciąż</div></div>
+            <a class="suno-link" href="https://suno.com/s/tDEqNslRofSzbcwV" target="_blank">▶ Posłuchaj na Suno</a>
           </div>
-          <div class="track-status status-next">Następny</div>
         </div>
+
+        <!-- 02 -->
+        <div class="track next" id="t02">
+          <div class="track-header" onclick="toggle('t02')">
+            <div class="track-num">02</div>
+            <div class="track-info"><div class="track-title">Frostwolf <span class="track-arrow">▼</span></div><div class="track-voice">Draka + Durotan · folk metal · utwór się urywa</div></div>
+            <div class="track-right"><div class="track-status status-next">Następny</div></div>
+          </div>
+          <div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div>
+        </div>
+
       </div>
     </div>
 
     <!-- AKT I -->
     <div class="act">
-      <div class="act-header">
-        <div class="act-num">II</div>
-        <div>
-          <div class="act-title">Akt I — Thrall</div>
-          <div class="act-subtitle">Łańcuchy</div>
-        </div>
-        <div class="act-line"></div>
-      </div>
+      <div class="act-header"><div class="act-num">II</div><div><div class="act-title">Akt I — Thrall</div><div class="act-subtitle">Łańcuchy</div></div><div class="act-line"></div></div>
       <div class="tracklist">
-        <div class="track">
-          <div class="track-num">03</div>
-          <div class="track-info">
-            <div class="track-title">Właściciel</div>
-            <div class="track-voice">Blackmoore solo · Rammstein industrial</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">04</div>
-          <div class="track-info">
-            <div class="track-title">Arena</div>
-            <div class="track-voice">Thrall solo · rap · ciężkie bity</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">05</div>
-          <div class="track-info">
-            <div class="track-title">Jedyna</div>
-            <div class="track-voice">Thrall + Jaina · LP klimat · dudy szkockie + skrecze</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">06</div>
-          <div class="track-info">
-            <div class="track-title">Głosy pod Żelazem</div>
-            <div class="track-voice">Thrall solo · pierwsze dotknięcie żywiołów</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">07</div>
-          <div class="track-info">
-            <div class="track-title">Durnholde Płonie</div>
-            <div class="track-voice">Thrall + Azeroth · rap + contralto · nu-metal</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
+        <div class="track" id="t03"><div class="track-header" onclick="toggle('t03')"><div class="track-num">03</div><div class="track-info"><div class="track-title">Właściciel <span class="track-arrow">▼</span></div><div class="track-voice">Blackmoore solo · industrial · electronic</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t04"><div class="track-header" onclick="toggle('t04')"><div class="track-num">04</div><div class="track-info"><div class="track-title">Arena <span class="track-arrow">▼</span></div><div class="track-voice">Thrall solo · rap · ciężkie bity</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t05"><div class="track-header" onclick="toggle('t05')"><div class="track-num">05</div><div class="track-info"><div class="track-title">Jedyna <span class="track-arrow">▼</span></div><div class="track-voice">Thrall + Jaina · LP klimat · dudy szkockie + skrecze</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t06"><div class="track-header" onclick="toggle('t06')"><div class="track-num">06</div><div class="track-info"><div class="track-title">Głosy pod Żelazem <span class="track-arrow">▼</span></div><div class="track-voice">Thrall solo · pierwsze dotknięcie żywiołów</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t07"><div class="track-header" onclick="toggle('t07')"><div class="track-num">07</div><div class="track-info"><div class="track-title">Durnholde Płonie <span class="track-arrow">▼</span></div><div class="track-voice">Thrall + Azeroth · rap + contralto · nu-metal</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
       </div>
     </div>
 
     <!-- INTERLUDIUM -->
     <div class="act">
-      <div class="act-header">
-        <div class="act-num">—</div>
-        <div>
-          <div class="act-title">Interludium</div>
-          <div class="act-subtitle">Most między tożsamościami</div>
-        </div>
-        <div class="act-line"></div>
-      </div>
+      <div class="act-header"><div class="act-num">—</div><div><div class="act-title">Interludium</div><div class="act-subtitle">Most między tożsamościami</div></div><div class="act-line"></div></div>
       <div class="tracklist">
-        <div class="track">
-          <div class="track-num">08</div>
-          <div class="track-info">
-            <div class="track-title">Step</div>
-            <div class="track-voice">Instrumentalny · ambient → organic metal</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
+        <div class="track" id="t08"><div class="track-header" onclick="toggle('t08')"><div class="track-num">08</div><div class="track-info"><div class="track-title">Step <span class="track-arrow">▼</span></div><div class="track-voice">Instrumentalny · ambient → organic metal</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Wkrótce —</div></div></div>
       </div>
     </div>
 
     <!-- AKT II -->
     <div class="act">
-      <div class="act-header">
-        <div class="act-num">III</div>
-        <div>
-          <div class="act-title">Akt II — Go'el</div>
-          <div class="act-subtitle">Tożsamość</div>
-        </div>
-        <div class="act-line"></div>
-      </div>
+      <div class="act-header"><div class="act-num">III</div><div><div class="act-title">Akt II — Go'el</div><div class="act-subtitle">Tożsamość</div></div><div class="act-line"></div></div>
       <div class="tracklist">
-        <div class="track">
-          <div class="track-num">09</div>
-          <div class="track-info">
-            <div class="track-title">Syn Durotana</div>
-            <div class="track-voice">Drek'Thar + Thrall · bas-baryton + rap</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">10</div>
-          <div class="track-info">
-            <div class="track-title">Żywioły</div>
-            <div class="track-voice">Thrall solo · inicjacja szamańska · eksperymentalny</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">11</div>
-          <div class="track-info">
-            <div class="track-title">Azeroth Do Ciebie</div>
-            <div class="track-voice">Azeroth solo · serce opery</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">12</div>
-          <div class="track-info">
-            <div class="track-title">Wstańcie</div>
-            <div class="track-voice">Thrall + chór orków · hymn wyzwolenia</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">13</div>
-          <div class="track-info">
-            <div class="track-title">Krew i Duma</div>
-            <div class="track-voice">Garrosh solo · hardcore metal</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">14</div>
-          <div class="track-info">
-            <div class="track-title">Dwa Wilki</div>
-            <div class="track-voice">Thrall + Garrosh · rap vs metal · bez zwycięzcy</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">15</div>
-          <div class="track-info">
-            <div class="track-title">Mur</div>
-            <div class="track-voice">Genn Greymane solo · złota era Metallica</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">16</div>
-          <div class="track-info">
-            <div class="track-title">Kalimdor</div>
-            <div class="track-voice">Thrall + Jaina · Linkin Park duchowy</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">17</div>
-          <div class="track-info">
-            <div class="track-title">Warchief</div>
-            <div class="track-voice">Thrall solo · rap zmęczony</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">18</div>
-          <div class="track-info">
-            <div class="track-title">Weź To</div>
-            <div class="track-voice">Thrall + Garrosh · przekazanie berła · utwór się urywa</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
+        <div class="track" id="t09"><div class="track-header" onclick="toggle('t09')"><div class="track-num">09</div><div class="track-info"><div class="track-title">Syn Durotana <span class="track-arrow">▼</span></div><div class="track-voice">Drek'Thar + Thrall · bas-baryton + rap</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t10"><div class="track-header" onclick="toggle('t10')"><div class="track-num">10</div><div class="track-info"><div class="track-title">Żywioły <span class="track-arrow">▼</span></div><div class="track-voice">Thrall solo · inicjacja szamańska · eksperymentalny</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t11"><div class="track-header" onclick="toggle('t11')"><div class="track-num">11</div><div class="track-info"><div class="track-title">Azeroth Do Ciebie <span class="track-arrow">▼</span></div><div class="track-voice">Azeroth solo · serce opery</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t12"><div class="track-header" onclick="toggle('t12')"><div class="track-num">12</div><div class="track-info"><div class="track-title">Wstańcie <span class="track-arrow">▼</span></div><div class="track-voice">Thrall + chór orków · hymn wyzwolenia</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t13"><div class="track-header" onclick="toggle('t13')"><div class="track-num">13</div><div class="track-info"><div class="track-title">Krew i Duma <span class="track-arrow">▼</span></div><div class="track-voice">Garrosh solo · hardcore metal</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t14"><div class="track-header" onclick="toggle('t14')"><div class="track-num">14</div><div class="track-info"><div class="track-title">Dwa Wilki <span class="track-arrow">▼</span></div><div class="track-voice">Thrall + Garrosh · rap vs metal · bez zwycięzcy</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t15"><div class="track-header" onclick="toggle('t15')"><div class="track-num">15</div><div class="track-info"><div class="track-title">Mur <span class="track-arrow">▼</span></div><div class="track-voice">Genn Greymane solo · złota era Metallica</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t16"><div class="track-header" onclick="toggle('t16')"><div class="track-num">16</div><div class="track-info"><div class="track-title">Kalimdor <span class="track-arrow">▼</span></div><div class="track-voice">Thrall + Jaina · Linkin Park duchowy</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t17"><div class="track-header" onclick="toggle('t17')"><div class="track-num">17</div><div class="track-info"><div class="track-title">Warchief <span class="track-arrow">▼</span></div><div class="track-voice">Thrall solo · rap zmęczony</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t18"><div class="track-header" onclick="toggle('t18')"><div class="track-num">18</div><div class="track-info"><div class="track-title">Weź To <span class="track-arrow">▼</span></div><div class="track-voice">Thrall + Garrosh · przekazanie berła · utwór się urywa</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
       </div>
     </div>
 
     <!-- AKT III -->
     <div class="act">
-      <div class="act-header">
-        <div class="act-num">IV</div>
-        <div>
-          <div class="act-title">Akt III — Kataklizm</div>
-          <div class="act-subtitle">Pęknięcie</div>
-        </div>
-        <div class="act-line"></div>
-      </div>
+      <div class="act-header"><div class="act-num">IV</div><div><div class="act-title">Akt III — Kataklizm</div><div class="act-subtitle">Pęknięcie</div></div><div class="act-line"></div></div>
       <div class="tracklist">
-        <div class="track">
-          <div class="track-num">19</div>
-          <div class="track-info">
-            <div class="track-title">Neltharion</div>
-            <div class="track-voice">Deathwing · Tool / APC · Stare Bóstwa mówią przez niego</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">20</div>
-          <div class="track-info">
-            <div class="track-title">Pęknięcie</div>
-            <div class="track-voice">Azeroth · Kataklizm · produkcja się rozpada</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">21</div>
-          <div class="track-info">
-            <div class="track-title">Dusza Smoka</div>
-            <div class="track-voice">Thrall solo · próba finalna · żywioły odpowiadają</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
-        <div class="track">
-          <div class="track-num">22</div>
-          <div class="track-info">
-            <div class="track-title">Cisza po</div>
-            <div class="track-voice">Thrall + Azeroth · ostatni duet · spokój bez triumfu</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
+        <div class="track" id="t19"><div class="track-header" onclick="toggle('t19')"><div class="track-num">19</div><div class="track-info"><div class="track-title">Neltharion <span class="track-arrow">▼</span></div><div class="track-voice">Deathwing · Tool / APC · Stare Bóstwa mówią przez niego</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t20"><div class="track-header" onclick="toggle('t20')"><div class="track-num">20</div><div class="track-info"><div class="track-title">Pęknięcie <span class="track-arrow">▼</span></div><div class="track-voice">Azeroth · Kataklizm · produkcja się rozpada</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t21"><div class="track-header" onclick="toggle('t21')"><div class="track-num">21</div><div class="track-info"><div class="track-title">Dusza Smoka <span class="track-arrow">▼</span></div><div class="track-voice">Thrall solo · próba finalna · żywioły odpowiadają</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
+        <div class="track" id="t22"><div class="track-header" onclick="toggle('t22')"><div class="track-num">22</div><div class="track-info"><div class="track-title">Cisza po <span class="track-arrow">▼</span></div><div class="track-voice">Thrall + Azeroth · ostatni duet · spokój bez triumfu</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
       </div>
     </div>
 
     <!-- OUTRO -->
     <div class="act">
-      <div class="act-header">
-        <div class="act-num">V</div>
-        <div>
-          <div class="act-title">Outro</div>
-          <div class="act-subtitle">Otwarte zakończenie</div>
-        </div>
-        <div class="act-line"></div>
-      </div>
+      <div class="act-header"><div class="act-num">V</div><div><div class="act-title">Outro</div><div class="act-subtitle">Otwarte zakończenie</div></div><div class="act-line"></div></div>
       <div class="tracklist">
-        <div class="track">
-          <div class="track-num">23</div>
-          <div class="track-info">
-            <div class="track-title">Go'el</div>
-            <div class="track-voice">Azeroth solo · cień Garrosha · ani triumf ani lament</div>
-          </div>
-          <div class="track-status status-planned">W planie</div>
-        </div>
+        <div class="track" id="t23"><div class="track-header" onclick="toggle('t23')"><div class="track-num">23</div><div class="track-info"><div class="track-title">Go'el <span class="track-arrow">▼</span></div><div class="track-voice">Azeroth solo · cień Garrosha · ani triumf ani lament</div></div><div class="track-right"><div class="track-status status-planned">W planie</div></div></div><div class="track-panel"><div class="panel-soon">— Tekst wkrótce —</div></div></div>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- TEKST 01 -->
-<section id="lyrics">
-  <span class="section-label">Tekst</span>
-  <h2 class="section-title">01 — Przed Imieniem</h2>
-  <div class="section-divider"></div>
-
-  <div class="lyrics-container">
-    <div class="lyrics-section">
-      <span class="lyrics-tag">Intro</span>
-      <div class="lyrics-lines">
-        Śpię w skale, w ogniu, w każdym wietrze<br>
-        w głębinach, w niebie, w każdej sferze<br>
-        tytanka śpiąca — w sobie niosę świat<br>
-        mój oddech to wulkany, magma, żar
-      </div>
-    </div>
-    <div class="lyrics-section">
-      <span class="lyrics-tag">Zwrotka I</span>
-      <div class="lyrics-lines">
-        Śnię snem starszym niż sam wszechświat<br>
-        czuję każdy oddech, każdy ślad<br>
-        żywioły niosą moje słowa w dal<br>
-        woda i ogień — i wieczny ich żal<br><br>
-        Szmaragdowy Sen jest cieniem mej duszy<br>
-        Azeryt moja krew w ziemi się kruszy<br>
-        Stare Bóstwa wgryzły się w mą skałę<br>
-        czuję jednak coś — połączenie stałe
-      </div>
-    </div>
-    <div class="lyrics-section">
-      <span class="lyrics-tag">Pre-Chorus</span>
-      <div class="lyrics-lines">
-        Gdzieś na śniegu krew pada w mą ziemię<br>
-        czuję narodziny i nowe brzemię<br>
-        coś się urywa — coś nowego wschodzi<br>
-        Go'el idzie — od żywiołów pochodzi
-      </div>
-    </div>
-    <div class="lyrics-section">
-      <span class="lyrics-tag">Refren</span>
-      <div class="lyrics-lines refrain">
-        Go'el — nim dostałeś imię, wiedziałam<br>
-        Go'el — w śnie na Ciebie czekałam<br>
-        Go'el — i Mroźnych Wilków Sfora<br>
-        Go'el — śpij jeszcze — nadchodzi ta pora
-      </div>
-    </div>
-    <div class="lyrics-section">
-      <span class="lyrics-tag">Zwrotka II</span>
-      <div class="lyrics-lines">
-        Neltharion był mym dzieckiem i strażnikiem<br>
-        stał się moim bólem — podszeptów wynikiem<br>
-        Yogg-Saron śpi w głębinach mej skały<br>
-        Y'Shaarj — wyrwane serce — wciąż się żali<br><br>
-        Szamani mówią do mnie przez kamienie<br>
-        ogień, wiatr, woda to me westchnienie<br>
-        jeden będzie głośniejszy od wszystkich<br>
-        jedyny Go'el — najważniejszy z bliskich
-      </div>
-    </div>
-    <div class="lyrics-section">
-      <span class="lyrics-tag">Pre-Chorus II</span>
-      <div class="lyrics-lines">
-        Gdzieś na śniegu krew Durotana broczy<br>
-        przyjmuję ją — to wołanie mej nocy<br>
-        pamiętam każdą kroplę tej miłości<br>
-        Go'el — Durotan — Draka — pełen samotności
-      </div>
-    </div>
-    <div class="lyrics-section">
-      <span class="lyrics-tag">Bridge</span>
-      <div class="lyrics-lines">
-        Nie jestem bogiem — jestem starą skałą<br>
-        nie jestem wolna — lecz mam duszę stałą<br>
-        widzę przyszłość przez zasłonę swoich snów<br>
-        Go'el, bracie zimowych wilczych kłów
-      </div>
-    </div>
-    <div class="lyrics-section">
-      <span class="lyrics-tag">Outro</span>
-      <div class="lyrics-lines">
-        Zapamiętaj ziemię pod swymi stopami<br>
-        ona cię zna — rozmawia z twoimi snami<br>
-        zanim ty ją poznasz — ona zna cię już<br>
-        Go'el — twoje imię — w moich żyłach wciąż
-      </div>
-    </div>
-  </div>
-
-  <!-- PLAYER PLACEHOLDER -->
-  <div class="player-placeholder">
-    <p>Odsłuch dostępny wkrótce</p>
-    <a href="#" class="track-link">▶ Posłuchaj na Suno</a>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
   <div class="footer-title">AZEROTH MÓWI — THRALL</div>
   <div class="footer-sub">
     Fan project · CEKABE REKORDZ · Suno AI<br>
-    Dedykowany <a href="#">Samael Channel News</a><br>
+    Dedykowany <a href="https://www.youtube.com/@SamaelChannelNews" target="_blank">Samael Channel News</a><br>
     World of Warcraft © Blizzard Entertainment
   </div>
 </footer>
 
+<script>
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
 </body>
 </html>
